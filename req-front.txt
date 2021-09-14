@@ -1,0 +1,22 @@
+/expense
+* all expense that exists in the db
+למשוך את כל ההוצאות של המשתמש ולהציג אותם במסך גלילה לפי חודשים,
+החודש הנוכחי יהיה ראשון במסך
+
+* users can get a detailed report
+  per specific month (the report will be in a simple html table)
+/expense/<month>
+
+/group/new
+will create new group and write it in the db
+
+/groups
+מציג למשתמש את כל הקבוצות שהוא נרשם אליהן
+
+/users 
+מציג רשימה של כל היוזרים שקיימים במערכת
+
+< optional >
+/signup
+/auth/login
+/auth/logout
