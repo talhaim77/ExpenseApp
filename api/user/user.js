@@ -1,48 +1,33 @@
 const { express } = require('../../server/server');
+const userController = require("../../controllers/userController")
 const router = express.Router();
+const Joi = require('joi');
 
-
-//get deals around
-router.get('', async (request, response) => {
-    const { category, distance, latitude, longtitude } = request.query;
-    // const coordinates = JSON.parse(coordinatesFromQuery);
-});
-
-//add deal
+//add new user
 router.post('', async (request, response) => {
-    const deal = request.body;
-});
-
-//edit deal
-router.post('/:id', async (request, response) => {
-    const deal = request.body;
-    const { id } = request.params;
-});
-
-//delete deal
-router.delete('/:id', async (request, response) => {
-    const { id } = request.params;
-});
-
-router.get('/location', async (request, response) => {
-    console.log('in api/deals/location');
-    const { dealsID } = request.query;
-
-    // console.log(dealsID);
-    getDealsLocation(dealsID)
-        .then((res) => {
-            response.send(res);
+    const { error } = validateUser(request.body)
+    if (error) return response.status(400).send(validation.error.details[0].message);
+    
+    
+    newUser = userController.addUser(request.body)
+        .then(() => {
+            console.log("add user")
+            response.send("user added successfully")
         }).catch((err) => {
-            console.log('in error func');
-            response.status(400).send(err.message);
-        });
+            console.log("in error of add user")
+            response.status(400).send(err.message)
+        })
 });
 
-//get deal
-router.get('/:id', async (request, response) => {
-    const { id } = request.params;
-    console.log('in api/deals/getdeal');
-});
 
+function validateUser(user) {
+    const schema = Joi.object({
+      name: Joi.string().min(1).max(30).required(),
+      email: Joi.string().min(5).max(50).required().email(),
+      password: Joi.string().min(5).max(255).required()
+    });
+    const validation = schema.validate(user);
+    return validation;
+  }
 
 module.exports = router;

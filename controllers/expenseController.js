@@ -1,14 +1,25 @@
 const expenseModel = require("../database/schemas/expense/expense");
+const groupModel = require("../database/schemas/group/groups");
+// const { errMsg } = require('../utils/constants');
 
 const addExpense = async (expense) => {
     const newExpense = new expenseModel.model(expense)
-
+    console.log(expense.group)
     await newExpense.save()
         .catch((err) => {
-            throw new Error(err.message);
+            console.log(err.message);
         });
 
-    
+    const group = await groupModel.model.findById(expense.group)
+        .catch((err) => {
+            console.log(err.message);
+        });
+
+    group.expenseList.push(newExpense.id);
+    await group.save()
+        .catch((err) => {
+            console.log(err.message);
+        });
 
     return newExpense;
 }
@@ -46,10 +57,20 @@ const getExpenseByMonth = async (month, year) => {
     return foundExpense;
 }
 
+const deleteExpense = async (expense) => {
+    const foundExpense = await expenseModel.model.deleteOne(expense)
+    .catch((err) => {
+        console.log(err.message);
+        throw err
+    });
+
+return foundExpense;
+}
+
 module.exports = {
     addExpense,
     getExpense,
     getExpenseByMonth,
-    // deleteExpense,
+    deleteExpense,
     // editExpense
 }
