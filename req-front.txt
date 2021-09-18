@@ -20,3 +20,5 @@ will create new group and write it in the db
 /signup
 /auth/login
 /auth/logout
+
+
