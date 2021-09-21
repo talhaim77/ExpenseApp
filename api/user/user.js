@@ -6,7 +6,7 @@ const Joi = require('joi');
 //add new user
 router.post('', async (request, response) => {
     const { error } = validateUser(request.body)
-    if (error) return response.status(400).send(validation.error.details[0].message);
+    if (error) return response.status(400).send(error.details[0].message);
     
     
     newUser = userController.addUser(request.body)
