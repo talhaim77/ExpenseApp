@@ -30,7 +30,7 @@ router.get('/:id', async (request, response) => {
 //add group
 router.post('', async (request, response) => {
     const { error } = validateGroup(request.body)
-    if (error) return response.status(400).send(validation.error.details[0].message);
+    if (error) return response.status(400).send(error.details[0].message);
     
     newGroup = groupController.addGroup(request.body)
         .then(() => {
