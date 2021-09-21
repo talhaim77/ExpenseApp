@@ -30,16 +30,17 @@ router.post('', async (request, response) => {
     // const { error } = validateExpense(request.body)
     // if (error) return response.status(400).send(validation.error.details[0].message);
     
-    newExpense = expenseController.addExpense(request.body)
-        .then(() => {
+    expenseController.addExpense(request.body)
+        .then((newExpense) => {
             console.log(`add expense to the group`)
-            response.send("expense added successfully")
+            response.json(200,newExpense)
         }).catch((err) => {
             console.log("in error of add expense")
             response.status(400).send(err.message)
         })
-    
-});
+}
+
+);
 
 //delete expense
 router.delete('/:id', async (request, response) => {
