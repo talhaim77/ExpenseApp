@@ -20,6 +20,7 @@ router.post('', async (request, response) => {
 });
 
 
+
 function validateUser(user) {
     const schema = Joi.object({
       name: Joi.string().min(1).max(30).required(),

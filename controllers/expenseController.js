@@ -36,7 +36,7 @@ const getExpense = async (expense) => {
 }
 
 // get all documents by specific month/year
-const getExpenseByMonth = async (month, year) => {
+const getExpenseByMonth = async (id, month, year) => {
 
     const endDate = new Date(year, month, 1);
     const startDate = new Date(year, month, -28)
@@ -45,9 +45,11 @@ const getExpenseByMonth = async (month, year) => {
         createdAt: {
           $gte: startDate,
           $lt: endDate,
-        }}
+        }
+    };
     const foundExpense = await expenseModel.model.find()
     .where(filters)
+    .where('group').equals(id)
     .exec()
         .catch((err) => {
             console.log(err.message);
