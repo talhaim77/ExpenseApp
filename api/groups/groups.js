@@ -32,10 +32,10 @@ router.post('', async (request, response) => {
     const { error } = validateGroup(request.body)
     if (error) return response.status(400).send(error.details[0].message);
     
-    newGroup = groupController.addGroup(request.body)
-        .then(() => {
+    groupController.addGroup(request.body)
+        .then((newGroup) => {
             console.log("add group")
-            response.send("group added successfully")
+            response.json(200,newGroup)
         }).catch((err) => {
             console.log("in error of add group")
             response.status(400).send(err.message)
