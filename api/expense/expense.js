@@ -15,10 +15,10 @@ router.get('', async (request, response) => {
 });
 
 // get expense by month
-router.get('/:month/:year', async (request, response) => {
-    const { month, year } = request.params;
+router.get('/:id/:month/:year', async (request, response) => {
+    const { id, month, year } = request.params;
     try {
-        expense = await expenseController.getExpenseByMonth(month,year)
+        expense = await expenseController.getExpenseByMonth(id, month, year)
         response.send(expense)
     } catch (err) {
         response.send(err.message)
