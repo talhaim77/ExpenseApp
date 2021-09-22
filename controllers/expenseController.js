@@ -37,9 +37,12 @@ const getExpense = async (expense) => {
 
 // get all documents by specific month/year
 const getExpenseByMonth = async (id, month, year) => {
-
-    const endDate = new Date(year, month, 1);
-    const startDate = new Date(year, month, -28)
+    let nextMonth = (+month) + (+1);
+    nextMonth = ('0' + nextMonth).slice(-2);
+    const startDate = new Date(`${year}-${month}-01`);
+    const endDate = new Date(`${year}-${nextMonth}-01`);
+    console.log(startDate)
+    console.log(endDate)
 
     const filters = {
         createdAt: {
