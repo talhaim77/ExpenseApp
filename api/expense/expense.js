@@ -1,8 +1,6 @@
 const { express } = require('../../server/server');
 const expenseController = require("../../controllers/expenseController")
-
 const router = express.Router();
-
 
 // get all expenses
 router.get('', async (request, response) => {
@@ -26,10 +24,7 @@ router.get('/:id/:month/:year', async (request, response) => {
 });
 
 //add expense
-router.post('', async (request, response) => {
-    // const { error } = validateExpense(request.body)
-    // if (error) return response.status(400).send(validation.error.details[0].message);
-    
+router.post('', async (request, response) => {    
     expenseController.addExpense(request.body)
         .then((newExpense) => {
             console.log(`add expense to the group`)
@@ -37,10 +32,19 @@ router.post('', async (request, response) => {
         }).catch((err) => {
             console.log("in error of add expense")
             response.status(400).send(err.message)
-        })
-}
-
+        })}
 );
+
+//edit expense
+router.patch('/:id', async (request, response) => {
+    const { id } = request.params;
+    try {
+        newExpense = await expenseController.editExpense(id, request.body)
+        response.send(newExpense)
+    } catch (err) {
+        response.status(400).send(err.message)
+    }
+});
 
 //delete expense
 router.delete('/:id', async (request, response) => {

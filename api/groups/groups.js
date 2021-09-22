@@ -66,11 +66,6 @@ router.delete('/:id', async (request, response) => {
     }
 });
 
-// router.get('/location', async (request, response) => {
-//     console.log('in api/deals/location');
-//     const { dealsID } = request.query;
-// });
-
 // validate post
 function validateGroup(group){
     const schema = Joi.object({

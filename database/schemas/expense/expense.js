@@ -21,7 +21,7 @@ const expenseSchema = new Schema(
       },
       group: {
         type: Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: 'group'
       },
       user: {

@@ -1,6 +1,5 @@
 const expenseModel = require("../database/schemas/expense/expense");
 const groupModel = require("../database/schemas/group/groups");
-// const { errMsg } = require('../utils/constants');
 
 const addExpense = async (expense) => {
     const newExpense = new expenseModel.model(expense)
@@ -72,10 +71,19 @@ const deleteExpense = async (expense) => {
 return foundExpense;
 }
 
+const editExpense = async (id, expense) => {
+    const newGroup = await expenseModel.model.findOneAndUpdate({ _id: id }, 
+        {$set: expense})
+        .catch((err) => {
+            throw new Error(err.message);
+        });
+
+    return newGroup;
+}
 module.exports = {
     addExpense,
     getExpense,
     getExpenseByMonth,
     deleteExpense,
-    // editExpense
-}
+    editExpense
+};
